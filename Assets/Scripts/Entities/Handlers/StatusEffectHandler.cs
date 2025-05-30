@@ -3,7 +3,7 @@ using System.Linq;
 using Effects;
 using UnityEngine;
 
-namespace Entities
+namespace Entities.Handlers
 {
     public class StatusEffectHandler : MonoBehaviour
     {
@@ -13,8 +13,6 @@ namespace Entities
 
         private void Awake()
         {
-            Debug.Log($"Status effect count: {_statusEffects.Count}");
-            
             _entity = GetComponent<Entity>() ?? throw new MissingComponentException("Entity component is required on StatusEffectHandler.");
         }
 

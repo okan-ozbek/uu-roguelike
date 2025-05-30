@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Enums;
 using UnityEngine;
 
 namespace Stats
@@ -32,6 +33,24 @@ namespace Stats
                 return _modifiers == null || _modifiers?.Count == 0 
                     ? maxValue 
                     : _modifiers!.Aggregate(maxValue, (current, mod) => mod.Calculate(current));
+            }
+        }
+        
+        public void AlterValue(float value, CalculationType calculationType)
+        {
+            switch (calculationType)
+            {
+                case CalculationType.Add:
+                    Value += value;
+                    break;
+                case CalculationType.Subtract:
+                    Value -= value;
+                    break;
+                case CalculationType.Multiply:
+                    Value *= value;
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(calculationType), calculationType, null);
             }
         }
         

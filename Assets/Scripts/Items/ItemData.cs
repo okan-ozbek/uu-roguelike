@@ -19,7 +19,7 @@ namespace Items
         public readonly List<Effect> Effects = new();
         public readonly List<StatusEffect> StatusEffects = new();
         
-        [SerializeField] public int Stacks { get; private set; } = 1;
+        public int Stacks { get; private set; } = 1;
         
         public void IncreaseStackCount()
         {

@@ -1,12 +1,10 @@
 ﻿using Entities;
 using Enums;
 using Stats;
-using UnityEngine;
 
 namespace Effects.Actives
 {
-    [CreateAssetMenu(fileName = "Decrease Health Status Effect", menuName = "Scriptable Objects/Status Effects/Decrease Health Status Effect", order = 1)]
-    public class DecreaseHealthStatusEffect : StatusEffect
+    public class SlowStatusEffect : StatusEffect
     {
         private StatModifier _modifier;
         
@@ -16,7 +14,7 @@ namespace Effects.Actives
             
             if (result)
             {
-                _modifier = new StatModifier(Value, CalculationType.Multiply, 1);
+                _modifier = new StatModifier(Value, CalculationType.Multiply, 2);
                 source.AddModifier(_modifier, StatType.Health);    
             }
         }

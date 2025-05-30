@@ -17,7 +17,7 @@ namespace Effects.Actives
         protected override void OnTick(Entity entity)
         {
             entity.AlterStat(Value, CalculationType.Subtract, StatType.Health);
-            entity.SetColor(Color.green, 0.25f);
+            entity.ColorHandler.SetColor(Color.green, 0.25f);
         }
         
         private float SetValue()
