@@ -1,4 +1,5 @@
-﻿using Enums;
+﻿using System.Collections;
+using Enums;
 using Sirenix.OdinInspector;
 using Stats;
 using TMPro;
@@ -17,11 +18,15 @@ namespace Entities
 
         public StatusEffectHandler StatusEffectHandler { get; private set; }
 
+        private SpriteRenderer _spriteRenderer;
+
         private void Awake()
         {
+            data = Instantiate(data);
             healthText.text = $"Health has not been assigned yet.";
             
             StatusEffectHandler = GetComponent<StatusEffectHandler>() ?? gameObject.AddComponent<StatusEffectHandler>();
+            _spriteRenderer = GetComponentInChildren<SpriteRenderer>();
         }
         
         private void Start()
@@ -64,6 +69,38 @@ namespace Entities
         public void RemoveModifier(StatModifier modifier, StatType statType)
         {
             data.Stats[statType].RemoveModifiersBySource(modifier.Source);
+        }
+
+        private Coroutine _colorFadeCoroutine;
+        public void SetColor(Color color, float duration)
+        {
+            if (_colorFadeCoroutine != null)
+            {
+                StopCoroutine(_colorFadeCoroutine);
+            }
+
+            _spriteRenderer.color = color;
+
+            if (duration > 0)
+            {
+                _colorFadeCoroutine = StartCoroutine(FadeColorBack(Color.white, duration));
+            }
+        }
+        
+        private IEnumerator FadeColorBack(Color color, float duration)
+        {
+            Color startColor = _spriteRenderer.color;
+            float elapsedTime = 0f;
+
+            while (elapsedTime < duration)
+            {
+                elapsedTime += Time.deltaTime;
+                _spriteRenderer.color = Color.Lerp(startColor, color, elapsedTime / duration);
+                yield return null;
+            }
+
+            _spriteRenderer.color = color;
+            _colorFadeCoroutine = null;
         }
     }
 }

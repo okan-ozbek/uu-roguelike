@@ -4,6 +4,7 @@ using UnityEngine;
 
 namespace Effects.Actives
 {
+    [CreateAssetMenu(fileName = "Poison Status Effect", menuName = "Scriptable Objects/Status Effects/Poison Status Effect", order = 1)]
     public class PoisonStatusEffect : StatusEffect
     {
         protected override float Value => SetValue();
@@ -16,16 +17,17 @@ namespace Effects.Actives
         protected override void OnTick(Entity entity)
         {
             entity.AlterStat(Value, CalculationType.Subtract, StatType.Health);
+            entity.SetColor(Color.green, 0.25f);
         }
         
         private float SetValue()
         {
-            if (Stacks == 1)
+            if (data.Stacks == 1)
             {
                 return data.baseValue;
             }
             
-            return data.baseValue * Mathf.Pow(1 + data.stackMultiplier, Stacks - 1);
+            return data.baseValue * Mathf.Pow(1 + data.stackMultiplier, data.Stacks - 1);
         }
     }
 }

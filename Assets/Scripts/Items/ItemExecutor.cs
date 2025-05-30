@@ -19,12 +19,7 @@ namespace Items
             
             // Create a copy of item data to avoid modifying the original asset
             // TODO refactor
-            if (data == null)
-            {
-                return;
-            }
             data = Instantiate(data);
-            
             
             for (int i = 0; i < 9; i++)
             {
@@ -44,7 +39,7 @@ namespace Items
 
                 foreach (var statusEffect in data.StatusEffects.Where(statusEffect => Procced()))
                 {
-                    statusEffect.Execute(_source, target, data);
+                    statusEffect.Execute(_source, target, data.Stacks);
                 }
             }
         }

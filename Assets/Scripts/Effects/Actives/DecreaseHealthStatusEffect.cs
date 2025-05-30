@@ -1,22 +1,25 @@
-﻿using System;
-using Entities;
+﻿using Entities;
 using Enums;
 using Stats;
-using Unity.VisualScripting;
 using UnityEngine;
 
 namespace Effects.Actives
 {
+    [CreateAssetMenu(fileName = "Decrease Health Status Effect", menuName = "Scriptable Objects/Status Effects/Decrease Health Status Effect", order = 1)]
     public class DecreaseHealthStatusEffect : StatusEffect
     {
         private StatModifier _modifier;
         
         protected override void OnExecute(Entity source, Entity target)
         {
-            _modifier = new StatModifier(Value, CalculationType.Multiply, Guid.NewGuid());
+            bool result = source.StatusEffectHandler.Apply(this);
             
-            source.StatusEffectHandler.Apply(this);
-            source.AddModifier(_modifier, StatType.Health);
+            if (result)
+            {
+                _modifier = new StatModifier(Value, CalculationType.Multiply, 1);
+                source.AddModifier(_modifier, StatType.Health);    
+            }
+            
         }
         
         protected override void OnRemove(Entity entity)

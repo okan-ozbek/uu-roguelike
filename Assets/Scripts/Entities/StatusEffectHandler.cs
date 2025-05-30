@@ -13,6 +13,8 @@ namespace Entities
 
         private void Awake()
         {
+            Debug.Log($"Status effect count: {_statusEffects.Count}");
+            
             _entity = GetComponent<Entity>() ?? throw new MissingComponentException("Entity component is required on StatusEffectHandler.");
         }
 
@@ -21,16 +23,21 @@ namespace Entities
             Handle();
         }
 
-        public void Apply(StatusEffect statusEffect)
+        public bool Apply(StatusEffect statusEffect)
         {
-            if (statusEffect == null || Has(statusEffect)) return;
+            if (statusEffect == false || Has(statusEffect))
+            {
+                return false;
+            }
 
             _statusEffects.Add(statusEffect);
+            
+            return true;
         }
 
-        public bool Has(StatusEffect statusEffect)
+        private bool Has(StatusEffect statusEffect)
         {
-            return statusEffect != null && _statusEffects.Contains(statusEffect);
+            return statusEffect == false && _statusEffects.Contains(statusEffect);
         }
 
         private void Handle()

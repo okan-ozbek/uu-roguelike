@@ -2,39 +2,34 @@
 using Entities;
 using Enums;
 using Items;
+using Sirenix.OdinInspector;
 using UnityEngine;
 
 namespace Effects
 {
-    [Serializable]
-    public abstract class StatusEffect
+    [CreateAssetMenu(fileName = "StatusEffect", menuName = "Scriptable Objects/StatusEffect", order = 1)]
+    public abstract class StatusEffect : SerializedScriptableObject
     {
         [SerializeField] protected StatusEffectData data;
-
-        protected int Stacks { get; private set; } = 1;
         
-        private float _creationTime;
-        private float _nextTickTime;
-
-        public bool IsExpired => SetIsExpired();
-        private bool NextTickReady => SetNextTickReady();
-
+        public bool IsExpired => data.GetIsExpired();
+        
         protected virtual float Value => data.baseValue;
         protected virtual float Duration => data.duration;
         
-        public void Execute(Entity source, Entity target, ItemData item)
+        public void Execute(Entity source, Entity target, int stacks)
         {
-            SetInternalVariables(item);
+            data.SetInitData(stacks);
             OnExecute(source, target);   
         }
         
         public void Tick(Entity entity)
         {
-            if (NextTickReady == false || IsExpired) 
+            if (data.GetNextTickReady() == false || data.GetIsExpired()) 
                 return;
             
             OnTick(entity);
-            _nextTickTime = Time.time + data.tickRate;
+            data.SetNextTickTime(Time.time + data.tickRate);
         }
         
         public void Remove(Entity entity)
@@ -45,24 +40,5 @@ namespace Effects
         protected virtual void OnExecute(Entity source, Entity target) { } 
         protected virtual void OnTick(Entity entity) { }
         protected virtual void OnRemove(Entity entity) { }
-
-        private void SetInternalVariables(ItemData item)
-        {
-            Stacks = item.Stacks;
-            _creationTime = Time.time;
-            _nextTickTime = Time.time;
-        }
-
-        public bool SetIsExpired()
-        {
-            float expirationTime = _creationTime + Duration;
-
-            return Time.time > expirationTime;
-        }
-
-        public bool SetNextTickReady()
-        {
-            return Time.time > _nextTickTime;
-        }
     }
 }
