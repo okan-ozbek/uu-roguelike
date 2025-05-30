@@ -44,7 +44,7 @@ namespace Entities
         {
             foreach (StatusEffect statusEffect in _statusEffects.ToList())
             {
-                if (statusEffect.IsExpired)
+                if (statusEffect.GetIsExpired())
                 {
                     statusEffect.Remove(_entity);
                     _statusEffects.Remove(statusEffect);

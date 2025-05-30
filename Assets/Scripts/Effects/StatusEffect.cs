@@ -7,12 +7,9 @@ using UnityEngine;
 
 namespace Effects
 {
-    [CreateAssetMenu(fileName = "StatusEffect", menuName = "Scriptable Objects/StatusEffect", order = 1)]
     public abstract class StatusEffect : SerializedScriptableObject
     {
         [SerializeField] protected StatusEffectData data;
-        
-        public bool IsExpired => data.GetIsExpired();
         
         protected virtual float Value => data.baseValue;
         protected virtual float Duration => data.duration;
@@ -25,7 +22,7 @@ namespace Effects
         
         public void Tick(Entity entity)
         {
-            if (data.GetNextTickReady() == false || data.GetIsExpired()) 
+            if (data.GetNextTickReady() == false || GetIsExpired()) 
                 return;
             
             OnTick(entity);
@@ -35,6 +32,13 @@ namespace Effects
         public void Remove(Entity entity)
         {
             OnRemove(entity);
+        }
+        
+        public bool GetIsExpired()
+        {
+            float expirationTime = data.CreationTime + Duration;
+
+            return Time.time > expirationTime;
         }
         
         protected virtual void OnExecute(Entity source, Entity target) { } 

@@ -23,13 +23,6 @@ namespace Effects
             CreationTime = Time.time;
             NextTickTime = Time.time;
         }
-        
-        public bool GetIsExpired()
-        {
-            float expirationTime = CreationTime + duration;
-
-            return Time.time > expirationTime;
-        }
 
         public bool GetNextTickReady()
         {
