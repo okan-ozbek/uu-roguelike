@@ -5,19 +5,21 @@ using Utils.Input;
 
 namespace Items
 {
-    [RequireComponent(typeof(Entity))]
+    [RequireComponent(typeof(IEntity))]
     public class ItemExecutor : MonoBehaviour
     {
-        [SerializeField] private Entity target;
+        private IEntity _target;
+        
         [SerializeField] private ItemData data;
 
-        private Entity _source;
+        private IEntity _source;
 
         private void Awake()
         {
             data = Instantiate(data);
             
-            _source = GetComponent<Entity>();
+            _source = GetComponent<IEntity>();
+            _target ??= FindObjectsByType<SimpleEntityController>(FindObjectsSortMode.None).First();
         }
         
         private void Update()
@@ -26,12 +28,12 @@ namespace Items
             {
                 foreach (var effect in data.Effects.Where(effect => Procced()))
                 {              
-                    effect.Execute(_source, target);
+                    effect.Execute(_source, _target);
                 }
 
                 foreach (var statusEffect in data.StatusEffects.Where(statusEffect => Procced()))
                 {
-                    statusEffect.Execute(_source, target, data.Stacks);
+                    statusEffect.Execute(_source, _target, data.Stacks);
                 }
             }
         }

@@ -10,14 +10,14 @@ namespace Effects.Actives
         protected override float Value => SetValue();
         protected override float Duration => SetDuration();
 
-        protected override void OnExecute(Entity source, Entity target)
+        protected override void OnExecute(IEntity source, IEntity target)
         {
             source.StatusEffectHandler.Apply(this);
         }
 
-        protected override void OnTick(Entity entity)
+        protected override void OnTick(IEntity entity)
         {
-            entity.AlterStat(Value, CalculationType.Add, StatType.Health);
+            entity.StatHandler.AlterStat(Value, CalculationType.Add, StatType.Health);
         }
 
         private float SetValue()

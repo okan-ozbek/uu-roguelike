@@ -14,13 +14,13 @@ namespace Effects
         protected virtual float Value => data.baseValue;
         protected virtual float Duration => data.duration;
         
-        public void Execute(Entity source, Entity target, int stacks)
+        public void Execute(IEntity source, IEntity target, int stacks)
         {
             data.SetInitData(stacks);
             OnExecute(source, target);   
         }
         
-        public void Tick(Entity entity)
+        public void Tick(IEntity entity)
         {
             if (data.GetNextTickReady() == false || GetIsExpired()) 
                 return;
@@ -29,7 +29,7 @@ namespace Effects
             data.SetNextTickTime(Time.time + data.tickRate);
         }
         
-        public void Remove(Entity entity)
+        public void Remove(IEntity entity)
         {
             OnRemove(entity);
         }
@@ -41,8 +41,8 @@ namespace Effects
             return Time.time > expirationTime;
         }
         
-        protected virtual void OnExecute(Entity source, Entity target) { } 
-        protected virtual void OnTick(Entity entity) { }
-        protected virtual void OnRemove(Entity entity) { }
+        protected virtual void OnExecute(IEntity source, IEntity target) { } 
+        protected virtual void OnTick(IEntity entity) { }
+        protected virtual void OnRemove(IEntity entity) { }
     }
 }

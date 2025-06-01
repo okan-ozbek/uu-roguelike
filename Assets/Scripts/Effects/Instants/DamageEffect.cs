@@ -5,9 +5,9 @@ namespace Effects.Instants
 {
     public class DamageEffect : Effect
     {
-        protected override void OnExecute(Entity source, Entity target)
+        protected override void OnExecute(IEntity source, IEntity target)
         {
-            target.AlterStat(value, CalculationType.Subtract, StatType.Health);
+            target.StatHandler.AlterStat(value, CalculationType.Subtract, StatType.Health);
         }
     }
 }

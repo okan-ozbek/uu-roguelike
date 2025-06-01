@@ -8,12 +8,12 @@ namespace  Effects
     {
         public float value;
 
-        public void Execute(Entity source, Entity target)
+        public void Execute(IEntity source, IEntity target)
         {
             OnExecute(source, target);
         }
         
-        protected abstract void OnExecute(Entity source, Entity target);
+        protected abstract void OnExecute(IEntity source, IEntity target);
     }
 }
 

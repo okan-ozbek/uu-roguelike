@@ -9,14 +9,14 @@ namespace Effects.Actives
     {
         protected override float Value => SetValue();
         
-        protected override void OnExecute(Entity source, Entity target)
+        protected override void OnExecute(IEntity source, IEntity target)
         {
             target.StatusEffectHandler.Apply(this);
         }
 
-        protected override void OnTick(Entity entity)
+        protected override void OnTick(IEntity entity)
         {
-            entity.AlterStat(Value, CalculationType.Subtract, StatType.Health);
+            entity.StatHandler.AlterStat(Value, CalculationType.Subtract, StatType.Health);
             entity.ColorHandler.SetColor(Color.green, 0.25f);
         }
         

@@ -16,15 +16,12 @@ MonoBehaviour:
     SerializedFormat: 2
     SerializedBytes: 
     ReferencedUnityObjects:
-    - {fileID: 11400000, guid: 9fc2e2c4b14b91d4e87b5f5e3934de50, type: 2}
+    - {fileID: 11400000, guid: 58b27cfcc8c407548aaa233e75898b24, type: 2}
     SerializedBytesString: 
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
     SerializationNodes:
-    - Name: Stacks
-      Entry: 3
-      Data: 1
     - Name: Effects
       Entry: 7
       Data: 0|System.Collections.Generic.List`1[[Effects.Effect, Assembly-CSharp]],
@@ -46,14 +43,8 @@ MonoBehaviour:
       Entry: 12
       Data: 1
     - Name: 
-      Entry: 7
-      Data: 2|Effects.Actives.DecreaseHealthStatusEffect, Assembly-CSharp
-    - Name: data
       Entry: 10
       Data: 0
-    - Name: 
-      Entry: 8
-      Data: 
     - Name: 
       Entry: 13
       Data: 

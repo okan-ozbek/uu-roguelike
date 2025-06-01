@@ -10,20 +10,20 @@ namespace Effects.Actives
     {
         private StatModifier _modifier;
         
-        protected override void OnExecute(Entity source, Entity target)
+        protected override void OnExecute(IEntity source, IEntity target)
         {
             bool result = source.StatusEffectHandler.Apply(this);
             
             if (result)
             {
                 _modifier = new StatModifier(Value, CalculationType.Multiply, 1);
-                source.AddModifier(_modifier, StatType.Health);    
+                source.StatHandler.AddModifier(_modifier, StatType.Health);    
             }
         }
         
-        protected override void OnRemove(Entity entity)
+        protected override void OnRemove(IEntity entity)
         {
-            entity.RemoveModifier(_modifier, StatType.Health);
+            entity.StatHandler.RemoveModifier(_modifier, StatType.Health);
         }
     }
 }

@@ -7,13 +7,13 @@ namespace Entities.Handlers
 {
     public class StatusEffectHandler : MonoBehaviour
     {
-        private Entity _entity;
+        private IEntity _entity;
         
         private readonly List<StatusEffect> _statusEffects = new();
 
         private void Awake()
         {
-            _entity = GetComponent<Entity>() ?? throw new MissingComponentException("Entity component is required on StatusEffectHandler.");
+            _entity = GetComponent<IEntity>() ?? throw new MissingComponentException("Entity component is required on StatusEffectHandler.");
         }
 
         private void Update()

@@ -22,7 +22,7 @@ MonoBehaviour:
     PrefabModifications: []
     SerializationNodes: []
   data:
-    baseValue: 0
-    duration: 0
-    tickRate: 0
-    stackMultiplier: 0
+    baseValue: 10
+    duration: 5
+    tickRate: 1
+    stackMultiplier: 0.1

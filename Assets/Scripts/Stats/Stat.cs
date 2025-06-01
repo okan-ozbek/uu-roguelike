@@ -38,20 +38,13 @@ namespace Stats
         
         public void AlterValue(float value, CalculationType calculationType)
         {
-            switch (calculationType)
+            Value = calculationType switch
             {
-                case CalculationType.Add:
-                    Value += value;
-                    break;
-                case CalculationType.Subtract:
-                    Value -= value;
-                    break;
-                case CalculationType.Multiply:
-                    Value *= value;
-                    break;
-                default:
-                    throw new ArgumentOutOfRangeException(nameof(calculationType), calculationType, null);
-            }
+                CalculationType.Add => Value + value,
+                CalculationType.Subtract => Value - value,
+                CalculationType.Multiply => Value * value,
+                _ => throw new ArgumentOutOfRangeException(nameof(calculationType), calculationType, null)
+            };
         }
         
         public void AddModifier(StatModifier modifier)
