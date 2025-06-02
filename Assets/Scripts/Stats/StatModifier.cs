@@ -1,30 +1,35 @@
-﻿using Enums;
-
-namespace Stats
+﻿namespace Stats
 {
     public class StatModifier
     {
-        private readonly float _value;
-        private readonly CalculationType _calculationType;
-        
-        public object Source { get; }
-
-        public float Calculate(float value)
+        public enum ModifierType
         {
-            return _calculationType switch
-            {
-                CalculationType.Add => value + _value,
-                CalculationType.Subtract => value - _value,
-                CalculationType.Multiply => value * _value,
-                _ => value
-            };
+            Add,
+            Multiply,
+            Subtract,
         }
         
-        public StatModifier(float value, CalculationType calculationType, object source = null)
+        public object Source { get; }
+        
+        private ModifierType Type { get; }
+        private float Value { get; }
+        
+        public StatModifier(ModifierType type, float value, object source)
         {
-            _value = value;
-            _calculationType = calculationType;
+            Type = type;
+            Value = value;
             Source = source;
+        }
+
+        public float Calculate(float statValue)
+        {
+            return Type switch 
+            {
+                ModifierType.Add => statValue + Value,
+                ModifierType.Multiply => statValue * Value,
+                ModifierType.Subtract => statValue - Value,
+                _ => statValue
+            };
         }
     }
 }

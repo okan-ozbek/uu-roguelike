@@ -1,5 +1,4 @@
-﻿using Enums;
-using UnityEngine;
+﻿using UnityEngine;
 using Utils.Input;
 
 namespace Entities.Player.States
@@ -13,18 +12,15 @@ namespace Entities.Player.States
 
         protected override void OnUpdate()
         {
-            Controller.Rigidbody.linearVelocity = GameInputManager.Instance.MovementDirection * Controller.Data.Stats[StatType.MovementSpeed].Value;
+            Debug.Log($"Movement Direction: {GameInput.Instance.MovementDirection}");
+            Debug.Log($"Movement Speed: {Controller.Stats.movementSpeed.Value}");
+            
+            Controller.transform.Translate(GameInput.Instance.MovementDirection * Controller.Stats.movementSpeed.Value * Time.deltaTime);
         }
-        
+
         protected override void SetTransitions()
         {
-            AddTransition(typeof(PlayerIdleState), () =>
-            {
-                bool stoppedMoving = GameInputManager.Instance.MovementDirection == Vector2.zero;
-                bool rigidbodyStopped = Controller.Rigidbody.linearVelocity == Vector2.zero;
-                
-                return stoppedMoving && rigidbodyStopped;                
-            });
+            AddTransition(typeof(PlayerIdleState), () => GameInput.Instance.MovementDirection == Vector2.zero);
         }
     }
 }

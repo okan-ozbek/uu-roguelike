@@ -1,56 +1,53 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Effects;
+using StatusEffects;
 using UnityEngine;
 
 namespace Entities.Handlers
 {
-    public class StatusEffectHandler : MonoBehaviour
+    public class StatusEffectHandler : MonoBehaviour, IVisitable
     {
-        private IEntity _entity;
+        public Entity Entity { get; private set; }
         
         private readonly List<StatusEffect> _statusEffects = new();
-
+        
         private void Awake()
         {
-            _entity = GetComponent<IEntity>() ?? throw new MissingComponentException("Entity component is required on StatusEffectHandler.");
+            Entity = GetComponent<Entity>();
         }
-
+        
         private void Update()
         {
-            Handle();
+            UpdateStatusEffects();
+            RemoveStatusEffects();
+        }
+        
+        public void Accept(IVisitor visitor)
+        {
+            visitor.Visit(this);
+        }
+        
+        public void UpdateStatusEffects()
+        {
+            foreach (var statusEffect in _statusEffects)
+            {
+                statusEffect.Tick(this);
+            }
         }
 
-        public bool Apply(StatusEffect statusEffect)
+        public void AddStatusEffect(StatusEffect statusEffect)
         {
-            if (statusEffect == false || Has(statusEffect))
-            {
-                return false;
-            }
-
             _statusEffects.Add(statusEffect);
-            
-            return true;
         }
 
-        private bool Has(StatusEffect statusEffect)
+        public void RemoveStatusEffects()
         {
-            return statusEffect == false && _statusEffects.Contains(statusEffect);
-        }
-
-        private void Handle()
-        {
-            foreach (StatusEffect statusEffect in _statusEffects.ToList())
+            foreach (var statusEffect in _statusEffects.Where(statusEffect => statusEffect.IsExpired()).ToList())
             {
-                if (statusEffect.GetIsExpired())
-                {
-                    statusEffect.Remove(_entity);
-                    _statusEffects.Remove(statusEffect);
-                    continue;
-                }
-                
-                statusEffect.Tick(_entity);
+                statusEffect.Remove(this);
             }
+        
+            _statusEffects.RemoveAll(statusEffect => statusEffect.IsExpired());
         }
     }
 }
