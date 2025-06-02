@@ -5,17 +5,17 @@ namespace Entities.Player
 {
     public class PlayerStateFactory : StateFactory
     {
-        private readonly PlayerController _controller;
-
+        private PlayerController Controller { get; }
+        
         public PlayerStateFactory(PlayerController controller)
         {
-            _controller = controller;
+            Controller = controller;
         }
-
+        
         protected override void SetStates()
         {
-            AddState(typeof(PlayerIdleState), new PlayerIdleState(_controller));
-            AddState(typeof(PlayerMoveState), new PlayerMoveState(_controller));
+            AddState(typeof(PlayerIdleState), new PlayerIdleState(Controller));
+            AddState(typeof(PlayerMoveState), new PlayerMoveState(Controller));
         }
     }
 }

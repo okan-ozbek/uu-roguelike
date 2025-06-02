@@ -1,5 +1,5 @@
-﻿using UnityEngine;
-using Utils.Input;
+﻿using Utils.Input;
+using UnityEngine;
 
 namespace Entities.Player.States
 {
@@ -9,10 +9,10 @@ namespace Entities.Player.States
         {
             EnableRootState();
         }
-        
+
         protected override void SetTransitions()
         {
-            AddTransition(typeof(PlayerMoveState), () => GameInputManager.Instance.MovementDirection != Vector2.zero);
+            AddTransition(typeof(PlayerMoveState), () => GameInput.Instance.MovementDirection != Vector2.zero);
         }
     }
 }

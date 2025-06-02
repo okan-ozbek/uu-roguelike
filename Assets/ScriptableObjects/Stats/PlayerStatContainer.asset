@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 54edc0b66282402980d026fc675e4a03, type: 3}
+  m_Name: PlayerStatContainer
+  m_EditorClassIdentifier: 
+  health:
+    rid: 6189141120537067595
+  movementSpeed:
+    rid: 6189141120537067598
+  references:
+    version: 2
+    RefIds:
+    - rid: 6189141120537067595
+      type: {class: Stat, ns: Stats, asm: Assembly-CSharp}
+      data:
+        _value: 100
+        _maxValue: 100
+    - rid: 6189141120537067598
+      type: {class: Stat, ns: Stats, asm: Assembly-CSharp}
+      data:
+        _value: 7
+        _maxValue: 7

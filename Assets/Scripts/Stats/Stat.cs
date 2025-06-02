@@ -1,81 +1,46 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using Enums;
 using UnityEngine;
 
 namespace Stats
 {
-    [Serializable]
     public class Stat
     {
-        public event Action<Stat> OnValueChanged;
+        [SerializeField] private float _value;
+        [SerializeField] private float _maxValue;
         
-        [SerializeField] private float baseValue;
-        [SerializeField] private float maxValue;
-
-        private List<StatModifier> _modifiers = new();
+        public List<StatModifier> Modifiers { get; } = new();
 
         public float Value
         {
-            get => baseValue;
-            set
-            {
-                baseValue = Mathf.Clamp(value, 0, MaxValue);
-                OnValueChanged?.Invoke(this);
-            }
+            get => Mathf.Clamp(_value, 0.0f, _maxValue);
+            set => _value = Mathf.Clamp(value, 0.0f, _maxValue);
         }
 
-        public float MaxValue
+        public float MaxValue => (Modifiers?.Count > 0) 
+            ? Modifiers.Aggregate(_maxValue, (current, modifier) => modifier.Calculate(current)) 
+            : _maxValue;
+
+        public void Add(StatModifier modifier)
         {
-            get
-            {
-                return _modifiers == null || _modifiers?.Count == 0 
-                    ? maxValue 
-                    : _modifiers!.Aggregate(maxValue, (current, mod) => mod.Calculate(current));
-            }
-        }
-        
-        public void AlterValue(float value, CalculationType calculationType)
-        {
-            Value = calculationType switch
-            {
-                CalculationType.Add => Value + value,
-                CalculationType.Subtract => Value - value,
-                CalculationType.Multiply => Value * value,
-                _ => throw new ArgumentOutOfRangeException(nameof(calculationType), calculationType, null)
-            };
-        }
-        
-        public void AddModifier(StatModifier modifier)
-        {
-            _modifiers ??= new List<StatModifier>();
+            bool isCurrentValueEqualToMax = Value == MaxValue;
             
-            _modifiers.Add(modifier);
-            Value = Value;
+            Modifiers.Add(modifier);
+            
+            Value = (isCurrentValueEqualToMax) 
+                ? MaxValue 
+                : Value;
         }
         
         public void RemoveModifiersBySource(object source)
         {
-            if (InvalidList()) return;
+            bool isCurrentValueEqualToMax = Value == MaxValue;
             
-            List<StatModifier> modifiersToRemove = _modifiers.Where(mod => mod.Source == source).ToList();
-            foreach (var modifier in modifiersToRemove)
-            {
-                RemoveModifier(modifier);
-            }
-
-            Value = Value;
-        }
-        
-        private void RemoveModifier(StatModifier modifier)
-        {
-            _modifiers.Remove(modifier);
-        }
-
-        private bool InvalidList()
-        {
-            return _modifiers == null || _modifiers.Count == 0;
+            Modifiers.RemoveAll(modifier => modifier.Source == source);
+            
+            Value = (isCurrentValueEqualToMax) 
+                ? MaxValue 
+                : Value;
         }
     }
 }
