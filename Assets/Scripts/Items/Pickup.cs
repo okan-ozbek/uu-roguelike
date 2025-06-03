@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using Utils.Input;
 
 namespace Items
 {
@@ -9,11 +8,17 @@ namespace Items
     
         public void OnTriggerStay2D(Collider2D other)
         {
-            if (GameInput.Instance.HasPressedInteract)
+            switch (item)
             {
-                other.GetComponent<IVisitable>()?.Accept(item);
-                Destroy(gameObject);    
+                case IActiveVisitor activeItem:
+                    other.GetComponent<IActiveVisitable>()?.Accept(activeItem);
+                    break;
+                case IPassiveVisitor passiveItem:
+                    other.GetComponent<IPassiveVisitable>()?.Accept(passiveItem);
+                    break;
             }
+            
+            Destroy(gameObject);  
         }
     }
 }

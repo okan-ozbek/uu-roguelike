@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Entities.Handlers
 {
-    public class StatusEffectHandler : MonoBehaviour, IVisitable
+    public class StatusEffectHandler : MonoBehaviour, IActiveVisitable
     {
         public Entity Entity { get; private set; }
         
@@ -22,12 +22,17 @@ namespace Entities.Handlers
             RemoveStatusEffects();
         }
         
-        public void Accept(IVisitor visitor)
+        public void Accept(IActiveVisitor visitor)
         {
             visitor.Visit(this);
         }
         
-        public void UpdateStatusEffects()
+        public void AddStatusEffect(StatusEffect statusEffect)
+        {
+            _statusEffects.Add(statusEffect);
+        }
+        
+        private void UpdateStatusEffects()
         {
             foreach (var statusEffect in _statusEffects)
             {
@@ -35,12 +40,7 @@ namespace Entities.Handlers
             }
         }
 
-        public void AddStatusEffect(StatusEffect statusEffect)
-        {
-            _statusEffects.Add(statusEffect);
-        }
-
-        public void RemoveStatusEffects()
+        private void RemoveStatusEffects()
         {
             foreach (var statusEffect in _statusEffects.Where(statusEffect => statusEffect.IsExpired()).ToList())
             {

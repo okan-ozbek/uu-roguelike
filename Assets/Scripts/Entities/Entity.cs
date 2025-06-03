@@ -1,22 +1,34 @@
 ﻿using Entities.Handlers;
 using Sirenix.OdinInspector;
-using Stats;
+using TMPro;
 using UnityEngine;
 
 namespace Entities
 {
     [RequireComponent(typeof(StatusEffectHandler))]
+    [RequireComponent(typeof(EffectHandler))]
     public class Entity : MonoBehaviour
     {
-        [SerializeField, Required] private StatContainer stats;
+        [SerializeField, Required] private EntityData data;
 
-        public StatContainer Stats { get; private set; }
+        public EntityData Data { get; private set; }
 
         protected virtual void Awake()
         {
-            Stats = Instantiate(stats);
-            Debug.Log("Hello world");
-            Debug.Log(Stats.movementSpeed.Value);
+            Data = Instantiate(data);
         }
+        
+        #region TODO: Remove this shit
+        private string HealthText => $"{Data.health.Value}/{Data.health.MaxValue}";
+        private string MovementSpeedText => $"{Data.movementSpeed.Value}/{Data.movementSpeed.MaxValue}";
+        public TMP_Text healthTextComponent;
+        public TMP_Text movementSpeedTextComponent;
+        
+        private void FixedUpdate()
+        {
+            healthTextComponent.text = HealthText;
+            movementSpeedTextComponent.text = MovementSpeedText;
+        }
+        #endregion
     }
 }

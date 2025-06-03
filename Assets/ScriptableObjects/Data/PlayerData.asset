@@ -9,23 +9,30 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 54edc0b66282402980d026fc675e4a03, type: 3}
-  m_Name: PlayerStatContainer
+  m_Script: {fileID: 11500000, guid: 90fae5a26286471da9cfd8462fd0be98, type: 3}
+  m_Name: PlayerData
   m_EditorClassIdentifier: 
   health:
-    rid: 6189141120537067595
+    rid: 6189141145659899976
   movementSpeed:
-    rid: 6189141120537067598
+    rid: 6189141145659899978
+  attackSpeed:
+    rid: 6189141145659899979
   references:
     version: 2
     RefIds:
-    - rid: 6189141120537067595
+    - rid: 6189141145659899976
       type: {class: Stat, ns: Stats, asm: Assembly-CSharp}
       data:
         _value: 100
         _maxValue: 100
-    - rid: 6189141120537067598
+    - rid: 6189141145659899978
       type: {class: Stat, ns: Stats, asm: Assembly-CSharp}
       data:
         _value: 7
         _maxValue: 7
+    - rid: 6189141145659899979
+      type: {class: Stat, ns: Stats, asm: Assembly-CSharp}
+      data:
+        _value: 1
+        _maxValue: 1

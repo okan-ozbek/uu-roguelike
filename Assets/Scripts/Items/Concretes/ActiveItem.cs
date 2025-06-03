@@ -7,11 +7,11 @@ using UnityEngine;
 namespace Items.Concretes
 {
     [CreateAssetMenu(fileName = "NewActiveItem", menuName = "Items/Active Item")]
-    public class ActiveItem : Item
+    public class ActiveItem : Item, IActiveVisitor
     {
         [SerializeField] private List<StatusEffect> statusEffects;
         
-        public override void Visit(IVisitable visitable)
+        public void Visit(IActiveVisitable visitable)
         {
             if (visitable is StatusEffectHandler handler)
             {

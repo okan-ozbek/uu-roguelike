@@ -8,13 +8,13 @@ namespace Stats
     {
         [SerializeField] private float _value;
         [SerializeField] private float _maxValue;
-        
-        public List<StatModifier> Modifiers { get; } = new();
+
+        private List<StatModifier> Modifiers { get; } = new();
 
         public float Value
         {
-            get => Mathf.Clamp(_value, 0.0f, _maxValue);
-            set => _value = Mathf.Clamp(value, 0.0f, _maxValue);
+            get => Mathf.Clamp(_value, 0.0f, MaxValue);
+            set => _value = Mathf.Clamp(value, 0.0f, MaxValue);
         }
 
         public float MaxValue => (Modifiers?.Count > 0) 
@@ -23,13 +23,10 @@ namespace Stats
 
         public void Add(StatModifier modifier)
         {
-            bool isCurrentValueEqualToMax = Value == MaxValue;
-            
             Modifiers.Add(modifier);
             
-            Value = (isCurrentValueEqualToMax) 
-                ? MaxValue 
-                : Value;
+            if (Value != MaxValue)
+                Value = modifier.Calculate(Value);
         }
         
         public void RemoveModifiersBySource(object source)
@@ -37,10 +34,7 @@ namespace Stats
             bool isCurrentValueEqualToMax = Value == MaxValue;
             
             Modifiers.RemoveAll(modifier => modifier.Source == source);
-            
-            Value = (isCurrentValueEqualToMax) 
-                ? MaxValue 
-                : Value;
+            Value = (isCurrentValueEqualToMax) ? MaxValue : Value;
         }
     }
 }

@@ -12,10 +12,7 @@ namespace Entities.Player.States
 
         protected override void OnUpdate()
         {
-            Debug.Log($"Movement Direction: {GameInput.Instance.MovementDirection}");
-            Debug.Log($"Movement Speed: {Controller.Stats.movementSpeed.Value}");
-            
-            Controller.transform.Translate(GameInput.Instance.MovementDirection * Controller.Stats.movementSpeed.Value * Time.deltaTime);
+            Controller.transform.Translate(GameInput.Instance.MovementDirection * Controller.Data.movementSpeed.Value * Time.deltaTime);
         }
 
         protected override void SetTransitions()

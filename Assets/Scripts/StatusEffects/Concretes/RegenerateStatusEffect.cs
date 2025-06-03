@@ -1,5 +1,6 @@
 ﻿using Entities;
 using Entities.Handlers;
+using Stats.Enums;
 using UnityEngine;
 
 namespace StatusEffects.Concretes
@@ -9,9 +10,9 @@ namespace StatusEffects.Concretes
     {
         protected override void OnTick(StatusEffectHandler handler)
         {
-            handler.Entity.Stats.health.Value += Value;
+            handler.Entity.Data.health.Value += Value;
             
-            Debug.Log($"Entity healed! Health increased by {Value}. Current health: {handler.Entity.Stats.health.Value}/{handler.Entity.Stats.health.MaxValue}");
+            Debug.Log($"Entity healed! Health increased by {Value}. Current health: {handler.Entity.Data.health.Value}/{handler.Entity.Data.health.MaxValue}");
         }
     }
 }
