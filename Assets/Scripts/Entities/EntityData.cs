@@ -10,16 +10,7 @@ namespace Entities
         [SerializeReference] public Stat health;
         [SerializeReference] public Stat movementSpeed;
         [SerializeReference] public Stat attackSpeed;
-        
-        public Stat GetStat(StatType type)
-        {
-            return type switch
-            {
-                StatType.Health => health,
-                StatType.MovementSpeed => movementSpeed,
-                StatType.AttackSpeed => attackSpeed,
-                _ => throw new System.ArgumentOutOfRangeException(nameof(type), type, null)
-            };
-        }
+
+        [SerializeReference] public Dictionary<ItemType, Item> items;
     }
 }

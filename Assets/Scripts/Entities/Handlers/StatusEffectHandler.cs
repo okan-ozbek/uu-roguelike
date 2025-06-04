@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Entities.Handlers
 {
-    public class StatusEffectHandler : MonoBehaviour, IActiveVisitable
+    public class StatusEffectHandler : MonoBehaviour, IStatusEffectVisitable
     {
         public Entity Entity { get; private set; }
         
@@ -22,7 +22,7 @@ namespace Entities.Handlers
             RemoveStatusEffects();
         }
         
-        public void Accept(IActiveVisitor visitor)
+        public void Accept(IStatusEffectVisitor visitor)
         {
             visitor.Visit(this);
         }

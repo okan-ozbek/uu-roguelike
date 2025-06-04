@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace StatusEffects
 {
-    public abstract class StatusEffect : ScriptableObject, IActiveVisitor
+    public abstract class StatusEffect : ScriptableObject, IStatusEffectVisitor
     {
         [SerializeField, Required] private float value;
         [SerializeField, Required] private float duration;
@@ -17,7 +17,7 @@ namespace StatusEffects
         protected float Duration => duration;
         protected float Ticks => ticks;
         
-        public void Visit(IActiveVisitable visitable)
+        public void Visit(IStatusEffectVisitable visitable)
         {
             if (visitable is StatusEffectHandler handler)
             {

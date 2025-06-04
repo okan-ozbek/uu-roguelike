@@ -3,12 +3,12 @@
     public void Accept(IVisitor visitor);
 }
 
-public interface IActiveVisitable
+public interface IStatusEffectVisitable
 {
-    public void Accept(IActiveVisitor visitor);
+    public void Accept(IStatusEffectVisitor visitor);
 }
 
-public interface IPassiveVisitable
+public interface IEffectVisitable
 {
-    public void Accept(IPassiveVisitor visitor);
+    public void Accept(IEffectVisitor visitor);
 }

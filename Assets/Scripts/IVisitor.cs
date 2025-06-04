@@ -3,12 +3,12 @@
     public void Visit(IVisitable visitable);
 }
 
-public interface IActiveVisitor
+public interface IStatusEffectVisitor
 {
-    public void Visit(IActiveVisitable visitable);
+    public void Visit(IStatusEffectVisitor visitable);
 }
 
-public interface IPassiveVisitor
+public interface IEffectVisitor
 {
-    public void Visit(IPassiveVisitable visitable);
+    public void Visit(IEffectVisitable visitable);
 }

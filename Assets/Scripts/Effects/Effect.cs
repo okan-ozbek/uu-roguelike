@@ -6,14 +6,14 @@ using UnityEngine;
 
 namespace Effects
 {
-    public abstract class Effect : ScriptableObject, IPassiveVisitor
+    public abstract class Effect : ScriptableObject, IEffectVisitor
     {
         [SerializeField, Required] protected float value;
         [SerializeField, Required] protected CalculationType calculationType;
 
         protected StatModifier Modifier => new(calculationType, value, this);
 
-        public void Visit(IPassiveVisitable visitable)
+        public void Visit(IEffectVisitable visitable)
         {
             if (visitable is EffectHandler handler)
             {
