@@ -1,10 +1,10 @@
-﻿using Entities.Handlers;
+using Entities.Handlers;
 using Stats.Enums;
 using UnityEngine;
 
 namespace StatusEffects.Concretes
 {
-    [CreateAssetMenu(fileName = "NewPoisonStatusEffect", menuName = "StatusEffects/Poison Status Effect")]
+    [CreateAssetMenu(fileName = "NewDamageOverTimeStatusEffect", menuName = "StatusEffects/Damage Over Time Status Effect")]
     public class PoisonStatusEffect : StatusEffect
     {
         protected override void OnTick(StatusEffectHandler handler)
